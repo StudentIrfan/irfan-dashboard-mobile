@@ -58,3 +58,4 @@ export interface MarkedDateEntry {
 }
 
 export type MarkedDatesMap = Record<string, MarkedDateEntry>;
+
