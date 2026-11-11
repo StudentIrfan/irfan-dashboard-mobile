@@ -57,11 +57,11 @@ export const themes: ThemeConfig = {
   },
 };
 
-export const PRIORITY_COLORS: readonly { label: string; value: string }[] = [
-  { label: 'Urgent', value: '#EF4444' },
-  { label: 'High', value: '#F97316' },
-  { label: 'Normal', value: '#6366F1' },
-  { label: 'Low', value: '#10B981' },
+export const PRIORITY_COLORS: readonly { label: string; color: string }[] = [
+  { label: 'Urgent', color: '#EF4444' },
+  { label: 'High', color: '#F97316' },
+  { label: 'Normal', color: '#6366F1' },
+  { label: 'Low', color: '#10B981' },
 ] as const;
 
 export const CATEGORY_COLORS: Record<CategoryTag, string> = {

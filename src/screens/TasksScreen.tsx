@@ -35,29 +35,29 @@ import {
 } from '../utils/dateUtils';
 
 interface CategoryOption {
-  value: CategoryTag;
+  tag: CategoryTag;
   subtitle: string;
   icon: keyof typeof Ionicons.glyphMap;
 }
 
 const CATEGORY_OPTIONS: readonly CategoryOption[] = [
   {
-    value: 'Travel/Logistics',
+    tag: 'Travel/Logistics',
     subtitle: 'redBus / KLIA Transit',
     icon: 'bus-outline',
   },
   {
-    value: 'Expenses',
+    tag: 'Expenses',
     subtitle: 'Setel / Tealive / Pop Meals',
     icon: 'card-outline',
   },
   {
-    value: 'Academic',
+    tag: 'Academic',
     subtitle: 'IIUM KICT / CCNA / Assignments',
     icon: 'school-outline',
   },
   {
-    value: 'General',
+    tag: 'General',
     subtitle: 'Mahallah & Daily Routines',
     icon: 'grid-outline',
   },
@@ -237,17 +237,17 @@ export const TasksScreen: React.FC = () => {
   const [title, setTitle] = useState<string>('');
   const [date, setDate] = useState<string>(getTodayISO());
   const [time, setTime] = useState<string>('14:30');
-  const [priorityColor, setPriorityColor] = useState<string>(PRIORITY_COLORS[0].value);
+  const [priorityColor, setPriorityColor] = useState<string>(PRIORITY_COLORS[0].color);
   const [categoryTag, setCategoryTag] = useState<CategoryTag>('Travel/Logistics');
   const [isRecurring, setIsRecurring] = useState<boolean>(false);
   const [sideNotes, setSideNotes] = useState<string>('');
 
   const datePresets = useMemo(
     () => [
-      { label: 'Today', value: format(new Date(), 'yyyy-MM-dd') },
-      { label: 'Tomorrow', value: format(addDays(new Date(), 1), 'yyyy-MM-dd') },
-      { label: '+3 Days', value: format(addDays(new Date(), 3), 'yyyy-MM-dd') },
-      { label: '+7 Days', value: format(addDays(new Date(), 7), 'yyyy-MM-dd') },
+      { label: 'Today', dateStr: format(new Date(), 'yyyy-MM-dd') },
+      { label: 'Tomorrow', dateStr: format(addDays(new Date(), 1), 'yyyy-MM-dd') },
+      { label: '+3 Days', dateStr: format(addDays(new Date(), 3), 'yyyy-MM-dd') },
+      { label: '+7 Days', dateStr: format(addDays(new Date(), 7), 'yyyy-MM-dd') },
     ],
     []
   );
@@ -257,7 +257,7 @@ export const TasksScreen: React.FC = () => {
     setTitle('');
     setDate(getTodayISO());
     setTime('14:30');
-    setPriorityColor(PRIORITY_COLORS[0].value);
+    setPriorityColor(PRIORITY_COLORS[0].color);
     setCategoryTag('Travel/Logistics');
     setIsRecurring(false);
     setSideNotes('');
@@ -652,11 +652,11 @@ export const TasksScreen: React.FC = () => {
             </Text>
             <View style={styles.presetRow}>
               {datePresets.map((preset) => {
-                const active = date === preset.value;
+                const active = date === preset.dateStr;
                 return (
                   <Pressable
                     key={preset.label}
-                    onPress={() => setDate(preset.value)}
+                    onPress={() => setDate(preset.dateStr)}
                     style={[
                       styles.presetChip,
                       {
@@ -763,25 +763,25 @@ export const TasksScreen: React.FC = () => {
             <View style={styles.priorityRow}>
               {PRIORITY_COLORS.map((p) => {
                 const selected =
-                  priorityColor.toUpperCase() === p.value.toUpperCase();
+                  priorityColor.toUpperCase() === p.color.toUpperCase();
                 return (
                   <Pressable
                     key={p.label}
-                    onPress={() => setPriorityColor(p.value)}
+                    onPress={() => setPriorityColor(p.color)}
                     style={[
                       styles.priorityOption,
                       {
                         backgroundColor: selected
-                          ? `${p.value}25`
+                          ? `${p.color}25`
                           : palette.surfaceElevated,
-                        borderColor: selected ? p.value : palette.border,
+                        borderColor: selected ? p.color : palette.border,
                       },
                     ]}
                   >
                     <View
                       style={[
                         styles.prioritySwatch,
-                        { backgroundColor: p.value },
+                        { backgroundColor: p.color },
                       ]}
                     />
                     <Text
@@ -811,12 +811,12 @@ export const TasksScreen: React.FC = () => {
             </Text>
             <View style={styles.categoryPickerGrid}>
               {CATEGORY_OPTIONS.map((option) => {
-                const selected = categoryTag === option.value;
-                const accent = CATEGORY_COLORS[option.value];
+                const selected = categoryTag === option.tag;
+                const accent = CATEGORY_COLORS[option.tag];
                 return (
                   <Pressable
-                    key={option.value}
-                    onPress={() => setCategoryTag(option.value)}
+                    key={option.tag}
+                    onPress={() => setCategoryTag(option.tag)}
                     style={[
                       styles.categoryPickerCard,
                       {
@@ -835,7 +835,7 @@ export const TasksScreen: React.FC = () => {
                           { color: palette.text, fontSize: 13, marginLeft: 6 },
                         ]}
                       >
-                        {option.value}
+                        {option.tag}
                       </Text>
                     </View>
                     <Text

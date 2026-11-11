@@ -1,9 +1,10 @@
 import React, { useMemo } from 'react';
 import {
-  Dimensions,
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
+  useWindowDimensions,
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -16,10 +17,11 @@ import { getThemeColors } from '../theme/colors';
 import { typography } from '../theme/typography';
 import { useSnakeEngine } from '../utils/useSnakeEngine';
 
-const SCREEN_WIDTH = Dimensions.get('window').width;
 const HORIZONTAL_PADDING = 32;
+const MAX_BOARD_SIZE = 378;
 
 export const SnakeGameScreen: React.FC = () => {
+  const { width: windowWidth } = useWindowDimensions();
   const themeMode = useStore((state) => state.theme);
   const palette = getThemeColors(themeMode);
 
@@ -37,9 +39,9 @@ export const SnakeGameScreen: React.FC = () => {
     togglePause,
   } = useSnakeEngine();
 
-  // Mathematically map 2D grid to screen width
-  const rawBoardSize = SCREEN_WIDTH - HORIZONTAL_PADDING;
-  const cellSize = Math.floor(rawBoardSize / gridSize);
+  // Mathematically map 2D grid to screen width (capped for web/tablet viewports)
+  const rawBoardSize = Math.min(windowWidth - HORIZONTAL_PADDING, MAX_BOARD_SIZE);
+  const cellSize = Math.max(12, Math.floor(rawBoardSize / gridSize));
   const boardDimension = cellSize * gridSize;
 
   const panGesture = useMemo(

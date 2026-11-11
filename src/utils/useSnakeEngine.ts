@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Coordinate, Direction } from '../types';
+import { Coordinate, Direction, SnakeEngineResult } from '../types';
 import {
   areCoordinatesEqual,
   checkCollision,
@@ -15,19 +15,7 @@ import {
 } from './gameLogic';
 import { useStore } from '../store/useStore';
 
-export interface SnakeEngineResult {
-  snake: Coordinate[];
-  food: Coordinate;
-  direction: Direction;
-  score: number;
-  highScore: number;
-  isGameOver: boolean;
-  isPaused: boolean;
-  gridSize: number;
-  changeDirection: (nextDirection: Direction) => void;
-  restartGame: () => void;
-  togglePause: () => void;
-}
+export type { SnakeEngineResult };
 
 export const useSnakeEngine = (): SnakeEngineResult => {
   const snakeHighScore = useStore((state) => state.snakeHighScore);

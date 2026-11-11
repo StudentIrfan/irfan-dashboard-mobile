@@ -59,3 +59,18 @@ export interface MarkedDateEntry {
 
 export type MarkedDatesMap = Record<string, MarkedDateEntry>;
 
+export interface SnakeEngineResult {
+  snake: Coordinate[];
+  food: Coordinate;
+  direction: Direction;
+  score: number;
+  highScore: number;
+  isGameOver: boolean;
+  isPaused: boolean;
+  gridSize: number;
+  changeDirection: (nextDirection: Direction) => void;
+  restartGame: () => void;
+  togglePause: () => void;
+}
+
+

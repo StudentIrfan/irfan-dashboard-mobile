@@ -81,6 +81,4 @@ export const generateRandomFood = (
   return availableCells[randomIndex];
 };
 
-export { useSnakeEngine } from './useSnakeEngine';
-export type { SnakeEngineResult } from './useSnakeEngine';
 
